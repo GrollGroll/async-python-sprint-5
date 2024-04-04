@@ -6,4 +6,4 @@ __all__ = [
 ]
 
 from .base import Base
-from .entity import Users, Storage, Token
+from .entity import Storage, Token, Users

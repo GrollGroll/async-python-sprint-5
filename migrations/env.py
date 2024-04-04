@@ -1,20 +1,20 @@
 import asyncio
+import os
 from logging.config import fileConfig
 
+from alembic import context
+from dotenv import load_dotenv
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
+from src.models import Base
 
-from alembic import context
-
-from dotenv import load_dotenv
 load_dotenv('.env')
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-import os
 config.set_main_option('postgresql+asyncpg://postgres:postgres@localhost:5432/file_storage', os.environ['DATABASE_DSN'])
 
 # Interpret the config file for Python logging.
@@ -27,8 +27,6 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-
-from src.models import Base
 
 target_metadata = Base.metadata
 

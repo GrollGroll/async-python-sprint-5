@@ -1,18 +1,18 @@
-from datetime import datetime
-import os
-from pathlib import Path
-import secrets
-from sqlalchemy.exc import SQLAlchemyError
-from fastapi.responses import FileResponse
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlalchemy.future import select
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 import logging
+import os
+import secrets
 import sys
+from datetime import datetime
+from pathlib import Path
 
 from db.db import get_session
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from models.entity import Storage, Token, Users
 from schemas.user import UserCreate
-from models.entity import Token, Users, Storage
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.future import select
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -143,7 +143,6 @@ async def download_file(user: str = Depends(read_users_me), file_path: str=None,
                 file_path = f'storage\{user_id}\{file.file_path}'
             else:
                 file_path = f'storage\{user_id}\{file.file_name}'
-    print(file_path)
     file = Path(file_path)
     if file.is_file():
         return FileResponse(file_path, filename=file.name, media_type='multipart/form-data')
