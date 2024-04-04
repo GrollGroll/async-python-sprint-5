@@ -314,3 +314,21 @@
 2. Используйте готовые библиотеки и пакеты, например, для авторизации. Для поиска можно использовать [сервис openbase](https://openbase.com/categories/python), [PyPi](https://pypi.org/) или на [GitHub](https://github.com/search?).
 3. Используйте **in-memory-db** для кэширования данных.
 4. Для скачивания файлов можно использовать возможности сервера отдачи статики, для хранения — облачное объектное хранилище (s3).
+
+
+______________________________________________________
+Создание БД:
+docker-compose up -d
+
+docker exec -it postgres-fastapi psql -U postgres
+
+CREATE DATABASE file_storage;
+
+Создание таблицы в БД:
+
+alembic revision ——autogenerate -m 01_initial-db
+
+alembic upgrade head
+
+Запуск приложения:
+python src/main.py
