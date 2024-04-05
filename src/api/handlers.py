@@ -71,7 +71,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='auth')
 
 # Вернуть информацию о пользователе
 @router.get('/users/me')
-async def read_users_me(token: str = Depends(oauth2_scheme)) -> dict:
+async def read_users_me(token: str = Depends(oauth2_scheme)):
     session = await get_session()
     result = await session.execute(select(Token).join(Users).where(Token.token==token))
     user = result.scalar_one_or_none()
